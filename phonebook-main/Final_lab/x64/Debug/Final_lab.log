@@ -1,0 +1,20 @@
+﻿  Final_lab.cpp
+  PhoneBook.cpp
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(209,13): warning C4566: символ, представленный универсальным именем символа "\u250D", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(209,13): warning C4566: символ, представленный универсальным именем символа "\u2511", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(210,13): warning C4566: символ, представленный универсальным именем символа "\u30FD", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(210,13): warning C4566: символ, представленный универсальным именем символа "\u30FB", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(210,13): warning C4566: символ, представленный универсальным именем символа "\u2200", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(210,13): warning C4566: символ, представленный универсальным именем символа "\uFF89", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(211,13): warning C4566: символ, представленный универсальным именем символа "\u2515", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(211,13): warning C4566: символ, представленный универсальным именем символа "\u2519", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(223,13): warning C4566: символ, представленный универсальным именем символа "\uFF89", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(223,13): warning C4566: символ, представленный универсальным именем символа "\u25D5", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(223,13): warning C4566: символ, представленный универсальным именем символа "\u30EE", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(223,13): warning C4566: символ, представленный универсальным именем символа "\uFF65", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(223,13): warning C4566: символ, представленный универсальным именем символа "\uFF9F", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(223,13): warning C4566: символ, представленный универсальным именем символа "\u2727", невозможно представить в текущей кодовой странице (1251)
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(238,17): warning C4102: PhoneBook: неиспользованная метка
+  Создание кода...
+C:\Users\super\Desktop\phonebook-main\Final_lab\PhoneBook.cpp(115): warning C4715: PhoneBook::getByID: значение возвращается не при всех путях выполнения
+  Final_lab.vcxproj -> C:\Users\super\Desktop\phonebook-main\x64\Debug\Final_lab.exe
