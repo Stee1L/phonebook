@@ -5,12 +5,12 @@
 #include <fstream>
 
 using namespace std;
-int PhoneBook::Counter = 1;
+int PhoneBook::Count = 1;
 
 /*============================== CONSTRUCTORS ==============================*/
 PhoneBook::PhoneBook(string number, string surname, string name, string patronymic)
 {
-	ID = Counter++;
+	ID = Count++;
 	Name = name;
     Surname = surname;
     Patronymic = patronymic;
@@ -25,6 +25,7 @@ void PhoneBook::setName(string name)                { Name = name; }
 void PhoneBook::setSurname(string surnname)         { Surname = surnname; }
 void PhoneBook::setPatronymic(string patronymic)    { Patronymic = patronymic; }
 void PhoneBook::setNumber(string number)            { Number = number; }
+void PhoneBook::setID(int id)                       { ID = id; }
 
 /*================================ GETTERS ================================*/
 string PhoneBook::getName()		    { return Name; }
@@ -47,58 +48,89 @@ void PhoneBook::printData()
 void PhoneBook::writeToFile(string filename, PhoneBook* Book, int size)
 {
     // процедура принимает на вход массив объектов, а затем записывает свойства каждого объекта в файл
-    ofstream file(filename, ios::in | ios::out);
+    ofstream file(filename, ios::out | ios::trunc);
     string line;
 
-    if (file.is_open()) cout << "Файл открыт успешно!" << endl;
+    if (!file.is_open()) { cout << "Ошибка при открытии файла!" << endl; }
+    else {
+        // запись новых данных в файл
+        for (int i = 0; i < size; i++)
+        {
+            file << Book[i].getNumber();
+            file << " ";
+            file << Book[i].getSurname();
+            file << " ";
+            file << Book[i].getName();
+            file << " ";
+            file << Book[i].getPatronymic();
+            file << endl;
+        }
+    }
+}
 
-    // запись новых данных в файл
+void PhoneBook::searchByName(PhoneBook* book, string name, int size)
+{
+    bool exist = false;
     for (int i = 0; i < size; i++)
     {
-        file << Book[i].getNumber();
-        file << " ";
-        file << Book[i].getSurname();
-        file << " ";
-        file << Book[i].getName();
-        file << " ";
-        file << Book[i].getPatronymic();
-        file << endl;
+        if (book[i].getName() == name) { book[i].printData(); exist = true; }
+    }
+    if (!exist) 
+    { 
+        cout << "Ничего не найдено! Введите '0' для выхода или укажите другое имя: "; 
+        cin >> name;
+        if (name != "0") { PhoneBook::searchByName(book, name, size); }
     }
 }
 
-bool PhoneBook::searchByName(PhoneBook* book, string name)
+void PhoneBook::searchBySurname(PhoneBook* book, string surname, int size)
 {
-    for (int i = 0; i < sizeof(book); i++)
+    bool exist = false;
+    for (int i = 0; i < size; i++)
     {
-        if (book[i].getName() == name) { book[i].printData(); return true; }
+        if (book[i].getSurname() == surname) { book[i].printData(); exist = true; }
     }
-    cout << "Ничего не найдено";
-    return false;
-}
-
-bool PhoneBook::searchBySurname(PhoneBook* book, string surname)
-{
-    for (int i = 0; i < sizeof(book); i++)
+    if (!exist)
     {
-        if (book[i].getSurname() == surname) { book[i].printData(); return true; }
+        cout << "Ничего не найдено! Введите '0' для выхода или укажите другую фамилию: ";
+        cin >> surname;
+        if (surname != "0") { PhoneBook::searchBySurname(book, surname, size); }
     }
-    cout << "Ничего не найдено";
-    return false;
 }
 
-bool PhoneBook::searchByPatronymic(PhoneBook* book, string patronymic)
+void PhoneBook::searchByPatronymic(PhoneBook* book, string patronymic, int size)
 {
-    for (int i = 0; i < sizeof(book); i++)
+    bool exist = false;
+    for (int i = 0; i < size; i++)
     {
-        if (book[i].getPatronymic() == patronymic) { book[i].printData(); return true; }
+        if (book[i].getPatronymic() == patronymic) { book[i].printData(); exist = true; }
     }
-    cout << "Ничего не найдено";
-    return false;
+    if (!exist)
+    {
+        cout << "Ничего не найдено! Введите '0' для выхода или укажите другое отчество: ";
+        cin >> patronymic;
+        if (patronymic != "0") { PhoneBook::searchBySurname(book, patronymic, size); }
+    }
 }
 
-PhoneBook PhoneBook::getByID(PhoneBook* book, int ID)
+void PhoneBook::searchByNumber(PhoneBook* book, string number, int size)
 {
-    for (int i = 0; i < sizeof(book); i++)
+    bool exist = false;
+    for (int i = 0; i < size; i++)
+    {
+        if (book[i].getNumber() == number) { book[i].printData(); exist = true; }
+    }
+    if (!exist)
+    {
+        cout << "Ничего не найдено! Введите '0' для выхода или укажите другой номер: ";
+        cin >> number;
+        if (number != "0") { PhoneBook::searchBySurname(book, number, size); }
+    }
+}
+
+PhoneBook PhoneBook::getByID(PhoneBook* book, int ID, int size)
+{
+    for (int i = 0; i < size; i++)
     {
         if (book[i].getID() == ID) { return book[i]; }
     }
@@ -106,13 +138,187 @@ PhoneBook PhoneBook::getByID(PhoneBook* book, int ID)
 
 /*=========================== STATIC FUNCTIONS ===========================*/
 
+PhoneBook* PhoneBook::changeData(PhoneBook* Book, string filename)
+{
+    int switchcase = 0;
+    string searchData, changeData;
+    int id = 0;
+    bool isChanged = false;
+
+    cout << "+-----------------------------------+" << endl;
+    cout << "| 1. Поиск по имени                 |" << endl;
+    cout << "| 2. Поиск по фамилии               |" << endl;
+    cout << "| 3. Поиск по отчеству              |" << endl;
+    cout << "| 4. Поиск по номеру телефона       |" << endl;
+    cout << "| 5. Поиск по ID                    |" << endl;
+    cout << "+-----------------------------------+" << endl << endl;
+    cout << "Выберите действие:";
+    cin >> switchcase;
+    cout << endl;
+    
+    switch (switchcase)
+    {
+        case 1:
+            cout << "Введите имя: ";
+            cin >> searchData;
+            PhoneBook::searchByName(Book, searchData, Count - 1);
+            break;
+
+        case 2:
+            cout << "Введите фамилию: ";
+            cin >> searchData;
+            PhoneBook::searchBySurname(Book, searchData, Count - 1);
+            break;
+
+        case 3:
+            cout << "Введите отчество: ";
+            cin >> searchData;
+            PhoneBook::searchByPatronymic(Book, searchData, Count - 1);
+            break;
+
+        case 4:
+            cout << "Введите номер телефона: ";
+            cin >> searchData;
+            PhoneBook::searchByNumber(Book, searchData, Count - 1);
+            break;
+
+        case 5:
+            cout << "Введите ID: ";
+            cin >> id;
+            PhoneBook::getByID(Book, id, Count - 1);
+            break;
+
+        default:
+            break;
+    }
+
+    cout << "Введите ID записи: ";
+    cin >> id;
+
+    cout << "Запись с именем " << searchData << " найдена!" << endl << endl;
+    cout << "+-----------------------------------+" << endl;
+    cout << "| 1. Изменить Имя                   |" << endl;
+    cout << "| 2. Изменить фамилию               |" << endl;
+    cout << "| 3. Изменить отчество              |" << endl;
+    cout << "| 4. Изменить номер телефона        |" << endl;
+    cout << "| 5. Удалить данные                 |" << endl;
+    cout << "| 6. Назад                          |" << endl;
+    cout << "+-----------------------------------+" << endl << endl << "Выберите действие: ";
+    cin >> switchcase;
+
+    switch (switchcase)
+    {
+        case 1:
+            cout << "Введите имя:";
+            cin >> changeData;
+            Book[id - 1].setName(changeData);
+            isChanged = true;
+            break;
+
+        case 2:
+            cout << "Введите фамилию:";
+            cin >> changeData;
+            Book[id - 1].setSurname(changeData);
+            isChanged = true;
+            break;
+
+        case 3:
+            cout << "Введите отчество:";
+            cin >> changeData;
+            Book[id - 1].setPatronymic(changeData);
+            isChanged = true;
+            break;
+
+        case 4:
+            cout << "Введите номер телефона:";
+            cin >> changeData;
+            Book[id - 1].setNumber(changeData);
+            isChanged = true;
+            break;
+
+        case 5:
+            Book = PhoneBook::removeData(Book, Count - 1, id);
+            cout << "Запись успешно удалена!" << endl << endl;
+            isChanged = true;
+            break;
+
+        case 6:
+            break;
+
+        default:
+            cout << "Введено неверное значение!" << endl;
+            break;
+    }
+    if (isChanged) 
+    { 
+        cout << "Внести изменения в файл?" << endl << "1. Да" << endl << "2. Нет" << endl << endl << "Выберите действие: ";
+        cin >> switchcase;
+        switch (switchcase)
+        {
+            case 1:
+                writeToFile(filename, Book, Count - 1);
+                break;
+
+            case 2: 
+                break;
+
+            default:
+                cout << "Введено неверное значение!" << endl;
+                break;
+        }
+    };
+    return Book;
+}
+
+PhoneBook* PhoneBook::removeData(PhoneBook* Book, int size, int id)
+{
+    for (int i = 0; i < size - 1; i++) 
+    { 
+        if (Book[i].getID() == id) 
+        { 
+            swap(Book[i], Book[i + 1]); 
+            Book[i].setID(Book[i].getID() - 1);
+        }
+    }
+    PhoneBook* book = new PhoneBook[--size];
+    copy(Book, Book + size, book);
+    delete[] Book;
+    Count--;
+    return book;
+}
+
+PhoneBook* PhoneBook::addData(PhoneBook* Book, int size)
+{
+    PhoneBook* book = new PhoneBook[++size];
+    for (int i = 0; i < size - 1; i++)
+        book[i] = Book[i];
+    
+    string name, surname, patronymic, number;
+
+    cout << "Введите имя: ";
+    cin >> name;
+    cout << "Введите фамилию: ";
+    cin >> surname;
+    cout << "Введите отчество: ";
+    cin >> patronymic;
+    cout << "Введите номер телефона: ";
+    cin >> number;
+    book[size - 1] = PhoneBook(number, name, surname, patronymic);
+    delete[] Book;
+    return book;
+}
+
+
+
 void PhoneBook::Interface()
 {  
+    int switchcase, id;
+    bool inWork = true;
     string filename;
-    cout << "┍——————————————————————————————————————————————┑" << endl;
-    cout << "| This is PhoneBook program v.1.0.0 ヽ(・∀・)ﾉ |" << endl;
-    cout << "┕——————————————————————————————————————————————┙" << endl;
-    cout << "Set filename for new Phone Book: "; 
+    cout << "+-----------------------------------+" << endl;
+    cout << "| This is PhoneBook program v.1.1.1 |" << endl; 
+    cout << "+-----------------------------------+" << endl;
+    cout << "Введите имя файла: "; 
     cin >> filename;
 
     int size = PhoneBook::rowsCount(filename);
@@ -121,10 +327,44 @@ void PhoneBook::Interface()
     for (int i = 0; i < size; i++)
     {
         Book[i] = PhoneBook(data[i][0], data[i][1], data[i][2], data[i][3]);
-        Book[i].printData();
+        //Book[i].printData();
     }
-    cout << "File opened successfully! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧" << endl << endl;
-    cout << "1. Show entries" << endl << "2. ";
+    cout << "Файл успешно открыт!" << endl << endl;
+    while (inWork)
+    {
+        cout << "+-----------------------------------+" << endl;
+        cout << "| 1. Показать данные                |" << endl;
+        cout << "| 2. Изменить данные                |" << endl;
+        cout << "| 3. Добавить данные                |" << endl;
+        cout << "| 4. Внести изменения в файл        |" << endl;
+        cout << "| 5. Выйти из программы             |" << endl;
+        cout << "+-----------------------------------+" << endl << endl << "Выберите действие: ";
+        
+        cin >> switchcase;
+        cout << endl;
+        switch (switchcase)
+        {
+            case 1:
+                for (int i = 0; i < Count - 1; i++) { Book[i].printData(); }
+                break;
+            case 2:
+                Book = PhoneBook::changeData(Book, filename);
+                break;
+            case 3:
+                Book = PhoneBook::addData(Book, Count - 1);
+                break;
+            case 4:
+                PhoneBook::writeToFile(filename, Book, Count - 1);
+                break;
+            case 5: 
+                inWork = false;
+                break;
+            default:
+                while (!cin >> switchcase) { cin.clear(); cin.get(); }
+                cout << "Введено неверное значение!" << endl << endl;
+                break;
+        }
+    }
 }
 
 // счёт строк в файле
@@ -132,7 +372,7 @@ int PhoneBook::rowsCount(string filename)
 {
     // открытие файла с именем filename
     ifstream file(filename);
-    if (file.is_open()) cout << "Файл открыт успешно!" << endl;
+    if (!file.is_open()) { cout << "Ошибка при открытии файла!" << endl; return 0; }
 
     // счёт строк в файле
     int rows = 0;
@@ -149,7 +389,7 @@ string** PhoneBook::readDataToArray(string filename)
 {
     // открытие файла с именем filename
     ifstream file(filename);
-    if (file.is_open()) cout << "Файл открыт успешно!" << endl;
+    if (!file.is_open()) { cout << "Ошибка при открытии файла!" << endl; return 0; }
 
     int rows = rowsCount(filename);
     string line;
