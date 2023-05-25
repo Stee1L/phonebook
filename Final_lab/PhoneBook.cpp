@@ -65,6 +65,7 @@ void PhoneBook::writeToFile(string filename, PhoneBook* Book, int size)
             file << Book[i].getPatronymic();
             file << endl;
         }
+        cout << "Файл успешно изменен!" << endl << endl;
     }
 }
 
@@ -103,13 +104,13 @@ void PhoneBook::searchByPatronymic(PhoneBook* book, string patronymic, int size)
     bool exist = false;
     for (int i = 0; i < size; i++)
     {
-        if (book[i].getPatronymic() == patronymic) { book[i].printData(); exist = true; }
+       if (book[i].getPatronymic() == patronymic) { book[i].printData(); exist = true; }
     }
     if (!exist)
     {
         cout << "Ничего не найдено! Введите '0' для выхода или укажите другое отчество: ";
         cin >> patronymic;
-        if (patronymic != "0") { PhoneBook::searchBySurname(book, patronymic, size); }
+        if (patronymic != "0") { PhoneBook::searchByPatronymic(book, patronymic, size); }
     }
 }
 
@@ -124,7 +125,7 @@ void PhoneBook::searchByNumber(PhoneBook* book, string number, int size)
     {
         cout << "Ничего не найдено! Введите '0' для выхода или укажите другой номер: ";
         cin >> number;
-        if (number != "0") { PhoneBook::searchBySurname(book, number, size); }
+        if (number != "0") { PhoneBook::searchByNumber(book, number, size); }
     }
 }
 
@@ -152,7 +153,7 @@ PhoneBook* PhoneBook::changeData(PhoneBook* Book, string filename)
     cout << "| 4. Поиск по номеру телефона       |" << endl;
     cout << "| 5. Поиск по ID                    |" << endl;
     cout << "+-----------------------------------+" << endl << endl;
-    cout << "Выберите действие:";
+    cout << "Выберите действие: ";
     cin >> switchcase;
     cout << endl;
     
@@ -189,6 +190,8 @@ PhoneBook* PhoneBook::changeData(PhoneBook* Book, string filename)
             break;
 
         default:
+            while (!cin >> switchcase) { cin.clear(); cin.get(); }
+            cout << "Введено неверное значение!" << endl << endl;
             break;
     }
 
@@ -209,28 +212,28 @@ PhoneBook* PhoneBook::changeData(PhoneBook* Book, string filename)
     switch (switchcase)
     {
         case 1:
-            cout << "Введите имя:";
+            cout << "Введите имя: ";
             cin >> changeData;
             Book[id - 1].setName(changeData);
             isChanged = true;
             break;
 
         case 2:
-            cout << "Введите фамилию:";
+            cout << "Введите фамилию: ";
             cin >> changeData;
             Book[id - 1].setSurname(changeData);
             isChanged = true;
             break;
 
         case 3:
-            cout << "Введите отчество:";
+            cout << "Введите отчество: ";
             cin >> changeData;
             Book[id - 1].setPatronymic(changeData);
             isChanged = true;
             break;
 
         case 4:
-            cout << "Введите номер телефона:";
+            cout << "Введите номер телефона: ";
             cin >> changeData;
             Book[id - 1].setNumber(changeData);
             isChanged = true;
@@ -246,7 +249,8 @@ PhoneBook* PhoneBook::changeData(PhoneBook* Book, string filename)
             break;
 
         default:
-            cout << "Введено неверное значение!" << endl;
+            while (!cin >> switchcase) { cin.clear(); cin.get(); }
+            cout << "Введено неверное значение!" << endl << endl;
             break;
     }
     if (isChanged) 
@@ -263,7 +267,8 @@ PhoneBook* PhoneBook::changeData(PhoneBook* Book, string filename)
                 break;
 
             default:
-                cout << "Введено неверное значение!" << endl;
+                while (!cin >> switchcase) { cin.clear(); cin.get(); }
+                cout << "Введено неверное значение!" << endl << endl;
                 break;
         }
     };
@@ -303,7 +308,9 @@ PhoneBook* PhoneBook::addData(PhoneBook* Book, int size)
     cin >> patronymic;
     cout << "Введите номер телефона: ";
     cin >> number;
+    while (number.length() < 11) { cout << "Введен некорректный номер! Попробуйте ещё раз: "; cin >> number; }
     book[size - 1] = PhoneBook(number, name, surname, patronymic);
+    cout << endl << "Запись успешно добавлена!" << endl << endl;
     delete[] Book;
     return book;
 }
@@ -322,28 +329,30 @@ void PhoneBook::Interface()
     cin >> filename;
 
     int size = PhoneBook::rowsCount(filename);
-    string** data = PhoneBook::readDataToArray(filename);
-    PhoneBook* Book = new PhoneBook[size];
-    for (int i = 0; i < size; i++)
+    if (size > 0)
     {
-        Book[i] = PhoneBook(data[i][0], data[i][1], data[i][2], data[i][3]);
-        //Book[i].printData();
-    }
-    cout << "Файл успешно открыт!" << endl << endl;
-    while (inWork)
-    {
-        cout << "+-----------------------------------+" << endl;
-        cout << "| 1. Показать данные                |" << endl;
-        cout << "| 2. Изменить данные                |" << endl;
-        cout << "| 3. Добавить данные                |" << endl;
-        cout << "| 4. Внести изменения в файл        |" << endl;
-        cout << "| 5. Выйти из программы             |" << endl;
-        cout << "+-----------------------------------+" << endl << endl << "Выберите действие: ";
-        
-        cin >> switchcase;
-        cout << endl;
-        switch (switchcase)
+        string** data = PhoneBook::readDataToArray(filename);
+        PhoneBook* Book = new PhoneBook[size];
+        for (int i = 0; i < size; i++)
         {
+            Book[i] = PhoneBook(data[i][0], data[i][1], data[i][2], data[i][3]);
+            //Book[i].printData();
+        }
+        cout << "Файл успешно открыт!" << endl << endl;
+        while (inWork)
+        {
+            cout << "+-----------------------------------+" << endl;
+            cout << "| 1. Показать данные                |" << endl;
+            cout << "| 2. Изменить данные                |" << endl;
+            cout << "| 3. Добавить данные                |" << endl;
+            cout << "| 4. Внести изменения в файл        |" << endl;
+            cout << "| 5. Выйти из программы             |" << endl;
+            cout << "+-----------------------------------+" << endl << endl << "Выберите действие: ";
+
+            cin >> switchcase;
+            cout << endl;
+            switch (switchcase)
+            {
             case 1:
                 for (int i = 0; i < Count - 1; i++) { Book[i].printData(); }
                 break;
@@ -356,15 +365,17 @@ void PhoneBook::Interface()
             case 4:
                 PhoneBook::writeToFile(filename, Book, Count - 1);
                 break;
-            case 5: 
+            case 5:
                 inWork = false;
                 break;
             default:
                 while (!cin >> switchcase) { cin.clear(); cin.get(); }
                 cout << "Введено неверное значение!" << endl << endl;
                 break;
+            }
         }
     }
+    else { cout << "Указано неверное название файла!"; }
 }
 
 // счёт строк в файле
