@@ -1,0 +1,31 @@
+﻿  PhoneBook.cpp
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(10,10): error C3646: Number: неизвестный спецификатор переопределения
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(10,16): error C2059: синтаксическая ошибка: ,
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(10,22): error C2238: непредвиденные лексемы перед ";"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(14,13): error C2061: синтаксическая ошибка: идентификатор "string"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(17,16): error C2061: синтаксическая ошибка: идентификатор "string"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(18,18): error C2061: синтаксическая ошибка: идентификатор "string"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(20,10): error C3646: getName: неизвестный спецификатор переопределения
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(20,17): error C2059: синтаксическая ошибка: (
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(20,19): error C2238: непредвиденные лексемы перед ";"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(21,10): error C3646: getNumber: неизвестный спецификатор переопределения
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(21,19): error C2059: синтаксическая ошибка: (
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(21,21): error C2238: непредвиденные лексемы перед ";"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(11,1): error C2511: final_lab::PhoneBook::PhoneBook(std::string,std::string): перегруженная функция-член не найдена в "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(5): message : см. объявление "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(12,2): error C2597: недопустимая ссылка на нестатический член "final_lab::PhoneBook::ID"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(9): message : см. объявление "final_lab::PhoneBook::ID"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(13,2): error C2065: Name: необъявленный идентификатор
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(14,2): error C2065: Number: необъявленный идентификатор
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(23,50): error C2511: void final_lab::PhoneBook::setName(std::string): перегруженная функция-член не найдена в "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(5): message : см. объявление "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(23,52): error C2065: Name: необъявленный идентификатор
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(24,53): error C2511: void final_lab::PhoneBook::setNumber(std::string): перегруженная функция-член не найдена в "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(5): message : см. объявление "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(24,55): error C2065: Number: необъявленный идентификатор
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(27,30): error C2039: "getName": не является членом "final_lab::PhoneBook".
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(5): message : см. объявление "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(27,49): error C2065: Name: необъявленный идентификатор
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(28,30): error C2039: "getNumber": не является членом "final_lab::PhoneBook".
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.h(5): message : см. объявление "final_lab::PhoneBook"
+C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(28,51): error C2065: Number: необъявленный идентификатор
