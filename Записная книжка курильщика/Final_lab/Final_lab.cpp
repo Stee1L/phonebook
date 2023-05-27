@@ -69,9 +69,9 @@ public:
                 file << Book[i].getNumber();
                 file << " ";
                 file << Book[i].getSurname();
-                file << " ";
+                file << "_";
                 file << Book[i].getName();
-                file << " ";
+                file << "_";
                 file << Book[i].getPatronymic();
                 file << endl;
             }
@@ -415,19 +415,30 @@ public:
         int rows = rowsCount(filename);
         string line;
 
-        string** data = new string * [rows];                // выделение памяти для динамического двумерного массива
+        string** data = new string * [rows];            // выделение памяти для динамического двумерного массива
         for (int i = 0; i < rows; i++)
             data[i] = new string[4];
 
-        file.clear();                                       // метод clear() используется для сброса состояния потока
-        file.seekg(0, ios::beg);                            // установка позиции чтения в начале файла 
-                                                            // (0 - позиция, ios::beg - отсчёт с начала файла)
-        // заполняем массив данными из файла
+        file.clear();                                   // метод clear() используется для сброса состояния потока
+        file.seekg(0, ios::beg);                        // установка позиции чтения в начале файла 
+                                                        // (0 - позиция, ios::beg - отсчёт с начала файла)
+                                                        // заполняем массив данными из файла
         for (int i = 0; i < rows; i++)
-            for (int j = 0; j < 4; j++)
-                file >> data[i][j];                         // здесь используется перегруженный оператор >> класса ifstream,
-                                                            // начиная с указанной ранее позиции он читает каждое значение файла
-                                                            // и записывает в соответствующую ячейку массива data
+        {
+            file >> data[i][0];                         // здесь используется перегруженный оператор >> класса ifstream,
+                                                        // начиная с указанной ранее позиции он читает каждое значение файла
+                                                        // и записывает в соответствующую ячейку массива data
+            string tempstr;
+            file >> tempstr;
+            int tmp = 1;
+            for (int j = 0; j < tempstr.length(); j++)
+            {
+                string word;
+                if (tempstr[j] == '_') { tmp++; }
+                else { data[i][tmp] += tempstr[j]; }
+            }
+        }
+
         file.close();
         return data;
     }
