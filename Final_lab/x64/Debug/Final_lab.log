@@ -1,4 +1,0 @@
-﻿  PhoneBook.cpp
-C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(321,21): warning C4101: id: неиспользованная локальная переменная
-C:\Users\delic\Desktop\Dev\Final_lab\Final_lab\PhoneBook.cpp(138): warning C4715: PhoneBook::getByID: значение возвращается не при всех путях выполнения
-  Final_lab.vcxproj -> C:\Users\delic\Desktop\Dev\Final_lab\x64\Debug\Final_lab.exe
