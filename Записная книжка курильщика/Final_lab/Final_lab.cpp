@@ -329,7 +329,7 @@ public:
 
     static void Interface()
     {
-        int switchcase, id;
+        int switchcase;
         bool inWork = true;
         string filename;
         cout << "+-----------------------------------+" << endl;
@@ -356,7 +356,8 @@ public:
                 cout << "| 2. Изменить данные                |" << endl;
                 cout << "| 3. Добавить данные                |" << endl;
                 cout << "| 4. Внести изменения в файл        |" << endl;
-                cout << "| 5. Выйти из программы             |" << endl;
+                cout << "| 5. Сортировать данные             |" << endl;
+                cout << "| 6. Выйти из программы             |" << endl;
                 cout << "+-----------------------------------+" << endl << endl << "Выберите действие: ";
 
                 cin >> switchcase;
@@ -376,6 +377,26 @@ public:
                     writeToFile(filename, Book, getCount() - 1);
                     break;
                 case 5:
+                    cout << "+-----------------------------------+" << endl;
+                    cout << "| 1. Сортировка методом пузырька    |" << endl;
+                    cout << "| 2. Сортировка методом вставок     |" << endl;
+                    cout << "+-----------------------------------+" << endl << endl << "Выберите действие: ";
+                    cin >> switchcase;
+                    cout << endl;
+
+                    switch (switchcase)
+                    {
+                    case 1:
+                        Book = bubbleSortByAlphabet(Book, size);
+                        break;
+                    case 2:
+                        Book = insertSortByAlphabet(Book, size);
+                        break;
+                    default:
+                        break;
+                    }
+                    break;
+                case 6:
                     inWork = false;
                     break;
                 default:
